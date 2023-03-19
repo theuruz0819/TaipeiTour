@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="attractionListViewModel"
+            type="com.example.tptour.attractions.viewmodel.AttractionListViewModel"/>
+
+        <import type="android.view.View"/>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        tools:ignore="ContentDescription"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".views.fragments.MainPageFragment"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:padding="3dp"
+            android:layout_marginTop="5dp"
+            android:adapter="@{attractionListViewModel.adapter}"
+            attractionItems="@{attractionListViewModel.attractionsDate}"
+            scope="@{attractionListViewModel.scope}"
+            langCode="@{attractionListViewModel.langCodeSetting}"
+            attractionClickInterface="@{attractionListViewModel.attractionClickInterface}"
+            />
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:indeterminate="true"
+            app:indicatorColor="@color/colorSecondary"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{attractionListViewModel.isLoading ? View.VISIBLE : View.GONE}"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
