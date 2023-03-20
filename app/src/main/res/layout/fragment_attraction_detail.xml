@@ -21,6 +21,12 @@
             tools:context=".attractions.view.AttractionDetailFragment"
             android:orientation="vertical"
             >
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                imageItem="@{attractionViewModel.imageList}"
+                />
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="300dp"

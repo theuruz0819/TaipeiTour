@@ -25,7 +25,6 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:padding="3dp"
             android:layout_marginTop="5dp"
-            android:adapter="@{attractionListViewModel.adapter}"
             attractionItems="@{attractionListViewModel.attractionsDate}"
             scope="@{attractionListViewModel.scope}"
             langCode="@{attractionListViewModel.langCodeSetting}"

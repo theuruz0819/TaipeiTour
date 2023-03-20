@@ -8,15 +8,52 @@ import androidx.databinding.BindingAdapter
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import androidx.viewpager2.widget.ViewPager2
 import com.example.tptour.R
 import com.example.tptour.attractions.adapter.AttractionClickInterface
 import com.example.tptour.attractions.adapter.AttractionPagingAdapter
+import com.example.tptour.attractions.adapter.ImageSliderAdapter
 import com.example.tptour.base.GlideApp
 import com.example.tptour.base.LanguageCode
 import com.example.tptour.data.AttractionListItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+
+@BindingAdapter("imageItem")
+fun bindRecyclerViewImagePager(pager: ViewPager2, imageItems: List<String>?) {
+    imageItems?.let {
+        pager.adapter = getOrCreateImagePagerListAdapter(pager, it)
+        //set the orientation of the viewpager using ViewPager2.orientation
+        pager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+        //select any page you want as your starting page
+        val currentPageIndex = 1
+        pager.currentItem = currentPageIndex
+
+        // registering for page change callback
+        pager.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+
+                }
+            }
+        )
+    }
+}
+
+private fun getOrCreateImagePagerListAdapter(pager: ViewPager2, imageItems: List<String>): ImageSliderAdapter {
+    return if (pager.adapter != null && pager.adapter is ImageSliderAdapter) {
+        pager.adapter as ImageSliderAdapter
+    } else {
+        val adapter = ImageSliderAdapter(imageItems)
+        adapter.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        pager.adapter = adapter
+        adapter
+    }
+}
 
 @BindingAdapter("langCode")
 fun setLangCode(recyclerView: RecyclerView, languageCode: LanguageCode?) {

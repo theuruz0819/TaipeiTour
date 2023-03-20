@@ -49,7 +49,9 @@ class AttractionListViewModel (application: Application) : AndroidViewModel(appl
             attractionsDateDetail.value = attractionListItem
         }
     }
-    val adapter = AttractionPagingAdapter()
+
+    val imageList = MutableLiveData<List<String>?>()
+
     init {
         scope.launch {
             getData().cachedIn(viewModelScope).collect{
@@ -71,5 +73,10 @@ class AttractionListViewModel (application: Application) : AndroidViewModel(appl
     fun setLangCode(languageCode: LanguageCode){
         TourRepo.setLangCode(languageCode)
         _langCodeSetting.value = languageCode
+    }
+
+    fun setImageList(item: AttractionListItem){
+        val list = item.images.map { it.src?:"" }
+        imageList.value = list
     }
 }
